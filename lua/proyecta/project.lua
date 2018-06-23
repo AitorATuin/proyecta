@@ -23,7 +23,7 @@ local after_plugins = {
 }
 
 local function find_project_file()
-  local project_file = vim.api.nvim_call_function("findfile", {".proyecta.lua", "*;"})
+  local project_file = vim.api.nvim_call_function("findfile", {".proyecta.lua", ".;~"})
   if project_file == "" then
     return nil
   end
