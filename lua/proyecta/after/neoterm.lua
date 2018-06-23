@@ -3,12 +3,17 @@ local h = require "proyecta.helpers"
 
 local PLUGIN_LOCK = "neoterm_loaded"
 
+
+local function repl_exec(...)
+  api.nvim_call_dict_function("neoterm.repl", "exec", {...})
+end
+
 local function repl_send_register()
   api.nvim_call_function("inputsave", {})
   local reg = api.nvim_call_function("input", {"Register to send into repl: "})
   api.nvim_call_function("inputrestore", {})
-  -- let reg_contents = getreg(a:register)
-  -- call g:neoterm.repl.exec(split(reg_contents), "\n")
+  local reg_contents = h.get_register(reg)
+  repl_exec(h.split(reg_contents), "\n")
 end
 
 local function repl_run()
@@ -21,7 +26,7 @@ local function repl_run()
       args = ft_args or {}
     end
   end
-  api.nvim_call_dict_function("neoterm.repl", "exec", {args})
+  repl_exec(args)
 end
 
 local function do_map(map_left, map_right, with_leader)
