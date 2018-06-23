@@ -1,10 +1,7 @@
 local api = vim.api
+local h = require "proyecta.helpers"
 
 local PLUGIN_LOCK = "neoterm_loaded"
-
-local function exists_var(var)
-  return api.nvim_call_function("exists", {var}) == 1
-end
 
 local function repl_send_register()
   api.nvim_call_function("inputsave", {})
@@ -19,7 +16,7 @@ local function repl_run()
   local args = {}
   if ft ~= "" then
     local v = "proyecta#repl_arguments_" .. ft
-    if exists_var(v) then
+    if h.exists(v) then
       local ft_args = api.nvim_get_var("proyecta#repl_arguments_" .. ft)
       args = ft_args or {}
     end
