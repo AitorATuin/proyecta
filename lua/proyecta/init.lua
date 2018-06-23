@@ -1,7 +1,5 @@
 local Project = require "proyecta/project"
 local h       = require "proyecta/helpers"
-local perror  = vim.api.nvim_err_write
-local inspect = require "inspect"
 
 local proyecta = {}
 

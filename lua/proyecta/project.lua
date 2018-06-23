@@ -6,9 +6,9 @@ Project.__index = Project
 
 local function do_after_plugin(plugin, centinel)
   -- Run only if plugin is loaded
-  loaded = true
+  local loaded = true
   if centinel and not h.exists(centinel) then
-    loaded = false 
+    loaded = false
   end
   return function ()
     if not loaded then
@@ -63,7 +63,7 @@ Project.init = function(p)
   vim.api.nvim_set_var("proyecta#repl_arguments_lua", p.repl_lines)
 
   -- run after plugins
-  for p, f in pairs(after_plugins) do f() end
+  for _, f in pairs(after_plugins) do f() end
 end
 
 return {

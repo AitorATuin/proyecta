@@ -1,6 +1,5 @@
 local api = vim.api
 
-local MOD = "after.neoterm"
 local PLUGIN_LOCK = "neoterm_loaded"
 
 local function exists_var(var)
@@ -61,17 +60,17 @@ local maps = {
 
 local function after()
   if api.nvim_call_function("exists", {PLUGIN_LOCK}) == 0 then
-    return 
+    return
   end
-  
+
   -- set variables
   for k, v in pairs(variables) do
     api.nvim_set_var(k, v)
   end
-  
+
   -- set maps
   for m, v in pairs(maps) do
-    do_map(m, v, true) 
+    do_map(m, v, true)
   end
 end
 
