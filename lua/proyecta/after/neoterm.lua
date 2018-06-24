@@ -15,7 +15,7 @@ local function repl_send_register()
   local reg = api.nvim_call_function("input", {"Register to send into repl: "})
   api.nvim_call_function("inputrestore", {})
   local reg_contents = h.get_register(reg)
-  repl_exec(h.split(reg_contents), "\n")
+  repl_exec(h.split(reg_contents))
 end
 
 local function repl_run()
