@@ -45,17 +45,22 @@ end
 local function new_project()
   local project_file = find_project_file()
   if not project_file then return nil, "Unable to find project file" end
-  local root = project_file:match("/([^/]+)$")
-  if not root then return nil, "Unable to find root project" end
+  local project_root = nil
+  if project_file:match("^%..+") then
+    project_root = h.fmt("%s/%s", h.getcwd(), project_file) 
+  else
+    project_root = project_file:match("/([^/]+)$")
+  end
+  if not project_root then return nil, "Unable to find root project" end
   local p, err = load_project_file(project_file)
   if not p then return nil, err end
   local project = {
     source      = p.source,
     tests       = p.tests,
     repl_lines  = p.repl_lines or {},
-    root        = project_file
+    root        = project_root
   }
-  h.poutf("project root: %s\n", project.root)
+  h.poutf("Proyecta: project root: %s\n", project.root)
   return setmetatable(project, Project)
 end
 

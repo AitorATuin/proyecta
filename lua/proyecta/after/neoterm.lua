@@ -1,17 +1,21 @@
 local api = vim.api
+local h = require "proyecta.helpers"
 
 local PLUGIN_LOCK = "neoterm_loaded"
 
-local function exists_var(var)
-  return api.nvim_call_function("exists", {var}) == 1
+
+local function repl_exec(...)
+  if api.nvim_get_var("neoterm").repl then
+    api.nvim_call_dict_function("neoterm.repl", "exec", {...})
+  end
 end
 
 local function repl_send_register()
   api.nvim_call_function("inputsave", {})
   local reg = api.nvim_call_function("input", {"Register to send into repl: "})
   api.nvim_call_function("inputrestore", {})
-  -- let reg_contents = getreg(a:register)
-  -- call g:neoterm.repl.exec(split(reg_contents), "\n")
+  local reg_contents = h.get_register(reg)
+  repl_exec(h.split(reg_contents))
 end
 
 local function repl_run()
@@ -19,12 +23,12 @@ local function repl_run()
   local args = {}
   if ft ~= "" then
     local v = "proyecta#repl_arguments_" .. ft
-    if exists_var(v) then
+    if h.exists(v) then
       local ft_args = api.nvim_get_var("proyecta#repl_arguments_" .. ft)
       args = ft_args or {}
     end
   end
-  api.nvim_call_dict_function("neoterm.repl", "exec", {args})
+  repl_exec(args)
 end
 
 local function do_map(map_left, map_right, with_leader)
@@ -51,8 +55,8 @@ local variables = {
 }
 
 local maps = {
-  tr  = [[:lua require("after.neoterm").repl_run()]],
-  tpr = [[:lua require("after.neoterm").repl_send_register()]],
+  tr  = [[:lua require("proyecta.after.neoterm").repl_run()]],
+  tpr = [[:lua require("proyecta.after.neoterm").repl_send_register()]],
   tl  = ":TREPLSendLine",
   tf  = ":TREPLSendFile",
   tp  = ":TREPLSendSelection",

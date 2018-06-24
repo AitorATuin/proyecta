@@ -15,5 +15,14 @@ utils.perrfln = function (fmt, ...) fmt_f(utils.perrln, fmt, ...) end
 utils.exists = function (var)
   return api.nvim_call_function("exists", {var}) == 1
 end
+utils.get_register = function(reg)
+  return api.nvim_call_function("getreg", {reg})
+end
+utils.split = function(str)
+  return api.nvim_call_function("split", {str})
+end
+utils.getcwd = function()
+  return api.nvim_call_function("getcwd", {})
+end
 
 return utils
