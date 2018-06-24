@@ -5,7 +5,9 @@ local PLUGIN_LOCK = "neoterm_loaded"
 
 
 local function repl_exec(...)
-  api.nvim_call_dict_function("neoterm.repl", "exec", {...})
+  if api.nvim_get_var("neoterm").repl then
+    api.nvim_call_dict_function("neoterm.repl", "exec", {...})
+  end
 end
 
 local function repl_send_register()
