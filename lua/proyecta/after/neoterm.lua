@@ -19,6 +19,10 @@ local function repl_send_register()
 end
 
 local function repl_run()
+  local neoterm = api.nvim_get_var("neoterm")
+  if neoterm.repl and neoterm.repl.loaded == 1 then
+    return
+  end
   local ft = api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "filetype")
   local args = {}
   if ft ~= "" then
