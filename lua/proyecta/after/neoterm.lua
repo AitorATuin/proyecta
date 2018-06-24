@@ -53,8 +53,8 @@ local variables = {
 }
 
 local maps = {
-  tr  = [[:lua require("after.neoterm").repl_run()]],
-  tpr = [[:lua require("after.neoterm").repl_send_register()]],
+  tr  = [[:lua require("proyecta.after.neoterm").repl_run()]],
+  tpr = [[:lua require("proyecta.after.neoterm").repl_send_register()]],
   tl  = ":TREPLSendLine",
   tf  = ":TREPLSendFile",
   tp  = ":TREPLSendSelection",

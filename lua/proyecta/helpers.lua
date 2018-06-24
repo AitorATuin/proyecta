@@ -21,5 +21,8 @@ end
 utils.split = function(str)
   return api.nvim_call_function("split", {str})
 end
+utils.getcwd = function()
+  return api.nvim_call_function("getcwd", {})
+end
 
 return utils
